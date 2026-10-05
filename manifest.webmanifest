@@ -1,0 +1,11 @@
+{
+  "name": "Mi Dieta",
+  "short_name": "Mi Dieta",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f7f7f5",
+  "theme_color": "#287c69",
+  "icons": [
+    {"src": "icon.png", "sizes": "512x512", "type": "image/png", "purpose": "any"}
+  ]
+}
