@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<title>Mi plan de alimentación · 15 días</title>
+<style>
+:root{--bg:#f7f7f5;--card:#fff;--text:#20211f;--muted:#686b66;--line:#dedfd9;--accent:#287c69;--soft:#e8f2ef}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+main{max-width:760px;margin:auto;padding:18px 14px 44px}.top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+h1{font-size:22px;margin:0}.sub{font-size:13px;color:var(--muted);margin-top:3px}
+button{font:inherit}.navbtn,.daybtn{border:1px solid var(--line);background:var(--card);min-height:44px;border-radius:12px;padding:8px 12px;color:var(--text)}
+.navbtn:disabled{opacity:.35}.days{display:flex;gap:7px;overflow:auto;padding:14px 0 8px}.daybtn{min-width:44px;padding:8px}
+.daybtn.active{background:var(--soft);border-color:var(--accent);font-weight:700;color:var(--accent)}
+.summary{background:var(--soft);padding:12px 14px;border-radius:14px;margin:8px 0 14px;font-size:14px;line-height:1.5}
+.meal{display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:15px;margin:10px 0}
+.meal input{width:22px;height:22px;accent-color:var(--accent);flex:none}.meal h2{font-size:16px;margin:0 0 5px}.meal p{font-size:15px;line-height:1.45;margin:0}
+.done p{text-decoration:line-through;color:var(--muted)}.rules{margin-top:18px;border-top:1px solid var(--line);padding-top:15px}
+.rules h2{font-size:17px}.rules ul{padding-left:21px;color:var(--muted);line-height:1.55;font-size:14px}.foot{font-size:12px;color:var(--muted);line-height:1.45}
+@media(max-width:420px){main{padding:14px 12px 36px}.top{align-items:flex-start}.navbtn{padding:7px 9px;font-size:13px}h1{font-size:20px}}
+</style>
+</head>
+<body>
+<main>
+  <div class="top">
+    <button class="navbtn" id="prev">← Anterior</button>
+    <div style="text-align:center"><h1 id="title">Día 1</h1><div class="sub" id="progress">0 de 5 comidas</div></div>
+    <button class="navbtn" id="next">Siguiente →</button>
+  </div>
+  <div class="days" id="days" aria-label="Días del plan"></div>
+  <div class="summary">🍎 3 frutas antes de la cena &nbsp;·&nbsp; 🥑 ½ aguacate cuando corresponda &nbsp;·&nbsp; ⚖️ Porciones pesadas ya cocinadas*</div>
+  <div id="meals"></div>
+  <section class="rules">
+    <h2>Reglas del plan</h2>
+    <ul>
+      <li>Tres porciones de fruta al día, todas antes de la cena.</li>
+      <li>Máximo 1 huevo entero por tiempo de comida.</li>
+      <li>Kéfir: días 2, 8 y 13.</li>
+      <li>Mariscos: aproximadamente 1 vez por semana.</li>
+      <li>½ aguacate hasta 3 veces por semana.</li>
+      <li>Carne roja magra: máximo 18 oz por semana.</li>
+      <li>Cena sin fruta. Sin frituras; usar spray o aceite de canola.</li>
+    </ul>
+    <p class="foot">*Los alimentos se pesan ya cocinados, excepto la avena: 4 cucharadas en crudo antes de cocinar. Este plan organiza la pauta nutricional indicada y no sustituye las indicaciones de tu médico o nutricionista.</p>
+  </section>
+</main>
+<script>
+const meals=[
+["4 cdas de avena cruda cocida en 1 taza de leche descremada/deslactosada + canela + ½ taza papaya (F1)","1 manzana pequeña (F2) + 10 almendras","5 oz pollo al romero + ½ taza arroz integral + 1 taza brócoli/zanahoria + ½ aguacate","5 oz yogur natural descremado + ½ taza fresas (F3)","4 oz pescado blanco en salsa natural de tomate + ½ taza quinoa + 1 taza calabacín"],
+["1 huevo + 1 clara con espinaca y tomate + 1 tortilla + ½ taza melón (F1)","½ taza pera (F2) + 10 almendras","6 oz res magra + ½ taza frijoles + 1 taza güicoy/zanahoria","¾ taza kéfir natural + ½ taza fresas (F3)","4 oz pollo al limón + ½ taza camote + 1 taza ejotes"],
+["1 rodaja pan integral + 1 oz queso fresco descremado + tomate/pico de gallo + ½ taza papaya (F1)","1 mandarina (F2) + 10 almendras","5 oz pescado al horno + ½ taza quinoa + 1 taza vegetales","5 oz yogur natural + 1 manzana pequeña (F3)","4 oz lomo de cerdo magro guisado + ½ taza lentejas + 1 taza vegetales"],
+["1 taza cereal integral sin azúcar + 1 taza leche descremada/deslactosada + ½ taza fresas (F1)","½ taza papaya (F2) + 10 almendras","5 oz pollo asado + ½ taza arroz integral + 2 tazas ensalada + ½ aguacate","1 oz queso descremado + 1 manzana pequeña (F3)","4 oz pescado al ajo y perejil + ½ taza garbanzos + 1 taza vegetales"],
+["4 cdas avena cruda cocida en leche descremada/deslactosada + 1 banano pequeño (F1) + canela","½ taza fresas (F2) + 5 oz yogur","6 oz res magra en tiras con vegetales + ½ taza quinoa","½ taza papaya (F3) + 10 almendras","4 oz pescado blanco + ½ taza frijoles + 1 taza calabacín"],
+["1 huevo + 1 clara con tomate y espinaca + ½ taza frijoles + ½ taza melón (F1)","1 manzana pequeña (F2)","5 oz camarones al ajo y limón + ½ taza arroz integral + 1 taza vegetales + ½ aguacate","5 oz yogur natural + ½ taza fresas (F3)","4 oz pollo guisado + ½ taza quinoa + 1 taza vegetales"],
+["1 rodaja pan integral + 1 oz queso fresco descremado + tomate + ½ taza papaya (F1)","1 pera pequeña (F2) + 10 almendras","5 oz pollo + ½ taza lentejas + 2 tazas ensalada","5 oz yogur + ½ taza frutos rojos (F3)","4 oz pavo fresco + ½ taza camote + 1 taza vegetales"],
+["4 cdas avena cruda cocida en leche descremada/deslactosada + ½ taza manzana (F1) + canela","½ taza papaya (F2) + 10 almendras","6 oz lomo de cerdo magro + ½ taza arroz integral + 1 taza vegetales + ½ aguacate","Licuado: ¾ taza kéfir + ½ taza fresas (F3) + hielo, sin azúcar y sin colar","4 oz pollo en salsa de tomate + ½ taza garbanzos + 1 taza vegetales"],
+["1 huevo + 1 clara con champiñones y tomate + 1 tortilla + ½ taza papaya (F1)","1 manzana pequeña (F2)","6 oz res magra + ½ taza quinoa + 1 taza ejotes/zanahoria","5 oz yogur + ½ taza fresas (F3)","4 oz pescado al horno + ½ taza lentejas + 1 taza vegetales"],
+["1 taza cereal integral sin azúcar + 1 taza leche descremada/deslactosada + ½ taza fresas (F1)","½ taza pera (F2) + 10 almendras","5 oz pollo + ½ taza arroz integral + 1 taza vegetales","1 oz queso descremado + ½ taza papaya (F3)","4 oz pescado blanco con hierbas + ½ taza quinoa + 1 taza brócoli"],
+["1 rodaja pan integral + 1 huevo entero + tomate/pico de gallo + ½ taza melón (F1)","1 manzana pequeña (F2) + 10 almendras","5 oz lomo de cerdo magro + ½ taza frijoles + 1 taza vegetales + ½ aguacate","5 oz yogur natural + ½ taza fresas (F3)","4 oz pollo al tomillo + ½ taza camote + 1 taza vegetales"],
+["4 cdas avena cruda cocida en leche descremada/deslactosada + 1 banano pequeño (F1) + canela","½ taza papaya (F2) + 10 almendras","5 oz pescado en salsa natural + ½ taza quinoa + 1 taza brócoli/zanahoria","5 oz yogur + ½ taza frutos rojos (F3)","4 oz pavo fresco + ½ taza lentejas + 1 taza vegetales"],
+["1 huevo + 1 clara con espinaca y tomate + 1 tortilla + ½ taza papaya (F1)","1 pera pequeña (F2)","5 oz camarones al ajo + ½ taza arroz integral + 1 taza vegetales","¾ taza kéfir natural + ½ taza fresas (F3)","4 oz res magra guisada con tomate + ½ taza garbanzos + 1 taza calabacín"],
+["4 cdas avena cruda cocida en leche descremada/deslactosada + ½ taza manzana (F1) + canela","1 mandarina (F2) + 10 almendras","5 oz pescado + ½ taza frijoles + 1 taza vegetales + ½ aguacate","1 oz queso descremado + ½ taza papaya (F3)","4 oz pollo al romero + ½ taza quinoa + 1 taza vegetales"],
+["1 rodaja pan integral + 1 oz queso fresco descremado + tomate + ½ taza papaya (F1)","1 manzana pequeña (F2) + 10 almendras","5 oz res magra + ½ taza arroz integral + 1 taza brócoli/zanahoria","5 oz yogur natural + ½ taza fresas (F3)","4 oz pescado blanco + ½ taza lentejas + 1 taza vegetales"]
+];
+const labels=["☀️ Desayuno","🍏 Refacción AM","🍽️ Almuerzo","🥛 Refacción PM","🌙 Cena"];
+let day=0;
+let state={};
+try{state=JSON.parse(localStorage.getItem("meal15-state")||"{}")}catch(e){}
+const $=id=>document.getElementById(id);
+function key(i){return day+"-"+i}
+function save(){try{localStorage.setItem("meal15-state",JSON.stringify(state))}catch(e){}}
+function renderDays(){
+ $("days").innerHTML="";
+ meals.forEach((_,i)=>{const b=document.createElement("button");b.className="daybtn"+(i===day?" active":"");b.textContent=i+1;b.addEventListener("click",()=>{day=i;render()});$("days").appendChild(b)})
+}
+function render(){
+ $("title").textContent="Día "+(day+1); $("prev").disabled=day===0; $("next").disabled=day===14; renderDays(); $("meals").innerHTML="";
+ meals[day].forEach((m,i)=>{const d=document.createElement("div");d.className="meal"+(state[key(i)]?" done":"");const c=document.createElement("input");c.type="checkbox";c.checked=!!state[key(i)];c.setAttribute("aria-label","Marcar "+labels[i]);c.addEventListener("change",()=>{state[key(i)]=c.checked;save();render()});const x=document.createElement("div");x.innerHTML="<h2>"+labels[i]+"</h2><p>"+m+"</p>";d.append(c,x);$("meals").appendChild(d)});
+ const n=meals[day].filter((_,i)=>state[key(i)]).length;$("progress").textContent=n+" de 5 comidas";
+}
+$("prev").addEventListener("click",()=>{if(day>0){day--;render()}});
+$("next").addEventListener("click",()=>{if(day<14){day++;render()}});
+render();
+</script>
+</body>
+</html>
